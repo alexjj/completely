@@ -32,8 +32,8 @@ if callsign:
             df = pd.DataFrame(data)
 
             # Convert date column to datetime
-            df['completed'] = pd.to_datetime(df['completed'])
-            df['Year'] = df['completed'].dt.year
+            df['completed'] = pd.to_datetime(df['completed']).dt.strftime('%Y-%m-%d')
+            df['Year'] = pd.to_datetime(df['completed']).dt.year
             df['Association'] = df['SummitCode'].apply(lambda x: x.split('/')[0])
             df['Region'] = df['SummitCode'].apply(lambda x: x.split('/')[1].split('-')[0])
 
@@ -57,6 +57,13 @@ if callsign:
                                      title="Completes by Association and Region",
                                      color='Completes', color_continuous_scale='blues')
             st.plotly_chart(fig_treemap)
+
+            # Table of summits and complete dates
+            df_sorted = df[['SummitCode', 'Name', 'completed']].sort_values('completed')
+            df_sorted.columns = ['Summit Code', 'Summit Name', 'Date Completed']
+
+            st.subheader("Summits and Complete Dates")
+            st.dataframe(df_sorted, hide_index=True)
         else:
             st.warning("No completes found for this callsign.")
     else:
