@@ -42,14 +42,9 @@ if callsign:
             st.metric(label="Total Completes", value=total_completes)
 
             # Bar chart for completes per year
-            completes_per_year = df['Year'].value_counts().reset_index()
+            completes_per_year = df['Year'].value_counts().reset_index().sort_values('Year')
             completes_per_year.columns = ['Year', 'Completes']
-            fig_year = px.bar(completes_per_year, x='Year', y='Completes',
-                              text='Completes', labels={'Completes': 'Number of Completes'},
-                              title="Completes Per Year")
-            fig_year.update_traces(textposition='outside')
-            fig_year.update_xaxes(type='category', categoryorder='category ascending')
-            st.plotly_chart(fig_year)
+            st.bar_chart(completes_per_year.set_index('Year'))
 
             # Treemap for Association and Region
             df_treemap = df.groupby(['Association', 'Region']).size().reset_index(name='Completes')
