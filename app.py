@@ -48,6 +48,7 @@ if callsign:
                               text='Completes', labels={'Completes': 'Number of Completes'},
                               title="Completes Per Year")
             fig_year.update_traces(textposition='outside')
+            fig_year.update_xaxes(type='category', categoryorder='category ascending')
             st.plotly_chart(fig_year)
 
             # Treemap for Association and Region
