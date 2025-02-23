@@ -46,7 +46,7 @@ if callsign:
             completes_per_year.columns = ['Year', 'Completes']
             st.bar_chart(completes_per_year.set_index('Year'))
 
-            # Treemap for Association and Region with customized tooltip
+            # Treemap for Association and Region
             df_treemap = df.groupby(['Association', 'Region'], as_index=False)['SummitCode'].count()
             df_treemap.rename(columns={'SummitCode': 'Completes'}, inplace=True)
             fig_treemap = px.treemap(df_treemap, path=['Association', 'Region'], values='Completes',
