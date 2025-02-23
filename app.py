@@ -46,11 +46,14 @@ if callsign:
             completes_per_year.columns = ['Year', 'Completes']
             st.bar_chart(completes_per_year.set_index('Year'))
 
-            # Treemap for Association and Region
-            df_treemap = df.groupby(['Association', 'Region']).size().reset_index(name='Completes')
+            # Treemap for Association and Region with customized tooltip
+            df_treemap = df.groupby(['Association', 'Region'], as_index=False)['SummitCode'].count()
+            df_treemap.rename(columns={'SummitCode': 'Completes'}, inplace=True)
             fig_treemap = px.treemap(df_treemap, path=['Association', 'Region'], values='Completes',
                                      title="Completes by Association and Region",
-                                     color='Completes', color_continuous_scale='blues')
+                                     color='Completes', color_continuous_scale='blues',
+                                     custom_data=['Completes'])
+            fig_treemap.update_traces(hovertemplate="Completes: %{value}")
             st.plotly_chart(fig_treemap)
 
             # Table of summits and complete dates
