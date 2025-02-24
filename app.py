@@ -16,7 +16,8 @@ def fetch_user_id(callsign):
 
 @st.cache_data
 def fetch_activations(user_id):
-    url = f"https://api-db.sota.org.uk/admin/sota_completes_by_id?id={user_id}&desc=0"
+    url = f"https://api-db2.sota.org.uk/logs/completes/{user_id}"
+    # url = f"https://api-db.sota.org.uk/admin/sota_completes_by_id?id={user_id}&desc=0"
     response = requests.get(url)
     if response.status_code == 200:
         return response.json()
