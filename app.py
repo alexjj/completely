@@ -57,7 +57,7 @@ if callsign:
             st.plotly_chart(fig_treemap)
 
             # Table of summits and complete dates
-            df_sorted = df[['SummitCode', 'Name', 'completed']].sort_values('completed')
+            df_sorted = df[['SummitCode', 'Name', 'completed']].sort_values('completed', ascending=False)
             df_sorted.columns = ['Summit Code', 'Summit Name', 'Date Completed']
 
             st.subheader("Summits and Complete Dates")
